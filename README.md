@@ -41,6 +41,8 @@ var config = {
   }
 }
 
+module.exports = config;
+
 ````
 Once the build finishes, a child process is spawned firing both a python and node script.
 
