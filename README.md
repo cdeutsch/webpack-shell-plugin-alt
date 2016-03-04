@@ -12,7 +12,7 @@ Just install the plugin
 
 ## Setup
 
-Insert the plugin into your application like so:
+Insert into your application like so:
 
 ````
 var WebpackShellPlugin = require('webpack-shell-plugin');
