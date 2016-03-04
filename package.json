@@ -1,0 +1,30 @@
+{
+  "name": "webpack-shell-plugin",
+  "version": "0.1.0",
+  "description": "Run shell commands before and after webpack builds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1337programming/webpack-shell-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "shell",
+    "webpack",
+    "plugin",
+    "webpack",
+    "shell",
+    "plugin",
+    "webpack",
+    "serve"
+  ],
+  "author": "Patrick Opie <opiepj@plu.edu>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1337programming/webpack-shell-plugin/issues"
+  },
+  "homepage": "https://github.com/1337programming/webpack-shell-plugin"
+}
