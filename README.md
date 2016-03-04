@@ -12,10 +12,10 @@ Just install the plugin
 
 ## Setup
 
-Insert into your application:
+Insert into your webpack.config.js:
 
 ````
-var WebpackShellPlugin = require('webpack-shell-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 var plugins = [];
 
@@ -23,6 +23,23 @@ plugins.push(new WebpackShellPlugin({
   onBuildStart: ['echo "Starting"'],
   onBuildEnd: ['python script.py && node script.js']
 }));
+
+var config = {
+  entry: {
+    app: __dirname + 'src/app.js'
+  },
+  output: {
+    path: __dirname + 'dest'
+  },
+  plugins: plugins,
+  module: {
+    loaders: [
+      {test: /\.js$/, loaders: 'babel'},
+      {test: /\.scss$/, loader: 'style!css!scss?'},
+      {test: /\.html$/, loader: 'html-loader'}
+    ]
+  }
+}
 
 ````
 Once the build finishes, a child process is spawned firing both a python and node script.
