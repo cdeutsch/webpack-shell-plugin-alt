@@ -22,7 +22,7 @@
     "serve"
   ],
   "author": "Patrick Opie <opiepj@plu.edu>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/1337programming/webpack-shell-plugin/issues"
   },
