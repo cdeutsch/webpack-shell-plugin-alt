@@ -7,7 +7,8 @@ function puts(error, stdout, stderr) {
 function WebpackShellPlugin(options) {
   var defaultOptions = {
     onBuildStart: [],
-    onBuildEnd: []
+    onBuildEnd: [],
+    onExit: []
   };
   if (!options.onBuildStart) {
     options.onBuildStart = defaultOptions.onBuildStart;
@@ -16,7 +17,9 @@ function WebpackShellPlugin(options) {
   if(!options.onBuildEnd) {
     options.onBuildEnd = defaultOptions.onBuildEnd;
   }
-
+  if(!options.onExit) {
+    options.onExit = defaultOptions.onExit;
+  }
   this.options = options;
 
 }
@@ -37,6 +40,13 @@ WebpackShellPlugin.prototype.apply = function(compiler) {
     options.onBuildEnd.forEach(function(script){ exec(script, puts)});
   }
   callback();
+});
+
+  compiler.plugin("done", function () {
+    if(options.onExit.length){
+    console.log("Executing addiotn scripts befor exit");
+    options.onExit.forEach(function(script){ exec(script, puts)});
+  }
 });
 };
 
