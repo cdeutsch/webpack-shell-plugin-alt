@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/webpack-shell-plugin.svg)](https://badge.fury.io/js/webpack-shell-plugin)
+![](https://reposs.herokuapp.com/?path=1337programming/webpack-shell-plugin)
+[![npm](https://img.shields.io/npm/dm/webpack-shell-plugin.svg)]()
 # Webpack Shell Plugin
 
 This plugin allows you to run any shell commands before or after webpack builds. This will work for both webpack and webpack-dev-server.
