@@ -1,2 +1,6 @@
 node_modules
 npm-debug.log
+*.swf
+.idea/
+.eslintrc.json
+

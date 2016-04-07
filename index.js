@@ -1,20 +1,26 @@
 var exec = require('child_process').exec;
 
 function puts(error, stdout, stderr) {
-  console.log(stdout);
+  if (error) {
+    console.log('Error: ', error, stderr);
+  }
+  if (this.options.verbose) {
+    console.log(stdout);
+  }
 }
 
 function WebpackShellPlugin(options) {
   var defaultOptions = {
     onBuildStart: [],
     onBuildEnd: [],
-    dev: false
+    dev: false,
+    verbose: false
   };
   if (!options.onBuildStart) {
     options.onBuildStart = defaultOptions.onBuildStart;
   }
 
-  if(!options.onBuildEnd) {
+  if (!options.onBuildEnd) {
     options.onBuildEnd = defaultOptions.onBuildEnd;
   }
 
@@ -22,29 +28,36 @@ function WebpackShellPlugin(options) {
 
 }
 
-WebpackShellPlugin.prototype.apply = function(compiler) {
-  const options = this.options;
+WebpackShellPlugin.prototype.apply = function (compiler) {
+  var options = this.options;
 
   compiler.plugin("compilation", function (compilation) {
-    if(options.onBuildStart.length){
-    console.log("Executing pre-build scripts");
-    options.onBuildStart.forEach(function (script) { exec(script, puts)});
-    if (options.dev) {
-      options.onBuildStart = [];
+    if (options.verbose) {
+      console.log('Report compilation:', compilation);
     }
-  }
-});
+    if (options.onBuildStart.length) {
+      console.log("Executing pre-build scripts");
+      options.onBuildStart.forEach(function (script) {
+        exec(script, puts)
+      });
+      if (options.dev) {
+        options.onBuildStart = [];
+      }
+    }
+  });
 
   compiler.plugin("emit", function (compilation, callback) {
-    if(options.onBuildEnd.length){
-    console.log("Executing post-build scripts");
-    options.onBuildEnd.forEach(function(script){ exec(script, puts)});
-    if (options.dev) {
-      options.onBuildEnd = [];
+    if (options.onBuildEnd.length) {
+      console.log("Executing post-build scripts");
+      options.onBuildEnd.forEach(function (script) {
+        exec(script, puts)
+      });
+      if (options.dev) {
+        options.onBuildEnd = [];
+      }
     }
-  }
-  callback();
-});
+    callback();
+  });
 };
 
 module.exports = WebpackShellPlugin;
