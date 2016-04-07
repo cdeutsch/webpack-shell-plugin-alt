@@ -49,12 +49,12 @@ function WebpackShellPlugin(options) {
 WebpackShellPlugin.prototype.apply = function (compiler) {
   var options = this.options;
 
-  compiler.plugin("compilation", function (compilation) {
+  compiler.plugin('compilation', function (compilation) {
     if (options.verbose) {
       console.log('Report compilation:', compilation);
     }
     if (options.onBuildStart.length) {
-      console.log("Executing pre-build scripts");
+      console.log('Executing pre-build scripts');
       options.onBuildStart.forEach(function (script) {
         exec(script, puts)
       });
@@ -64,9 +64,9 @@ WebpackShellPlugin.prototype.apply = function (compiler) {
     }
   });
 
-  compiler.plugin("emit", function (compilation, callback) {
+  compiler.plugin('emit', function (compilation, callback) {
     if (options.onBuildEnd.length) {
-      console.log("Executing post-build scripts");
+      console.log('Executing post-build scripts');
       options.onBuildEnd.forEach(function (script) {
         exec(script, puts)
       });
