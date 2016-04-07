@@ -7,7 +7,8 @@ function puts(error, stdout, stderr) {
 function WebpackShellPlugin(options) {
   var defaultOptions = {
     onBuildStart: [],
-    onBuildEnd: []
+    onBuildEnd: [],
+    dev: false
   };
   if (!options.onBuildStart) {
     options.onBuildStart = defaultOptions.onBuildStart;
@@ -28,6 +29,9 @@ WebpackShellPlugin.prototype.apply = function(compiler) {
     if(options.onBuildStart.length){
     console.log("Executing pre-build scripts");
     options.onBuildStart.forEach(function (script) { exec(script, puts)});
+    if (options.dev) {
+      options.onBuildStart = [];
+    }
   }
 });
 
@@ -35,6 +39,9 @@ WebpackShellPlugin.prototype.apply = function(compiler) {
     if(options.onBuildEnd.length){
     console.log("Executing post-build scripts");
     options.onBuildEnd.forEach(function(script){ exec(script, puts)});
+    if (options.dev) {
+      options.onBuildEnd = [];
+    }
   }
   callback();
 });
