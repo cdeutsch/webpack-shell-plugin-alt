@@ -4,9 +4,7 @@ function puts(error, stdout, stderr) {
   if (error) {
     console.log('Error: ', error, stderr);
   }
-  if (this.options.verbose) {
-    console.log(stdout);
-  }
+  console.log(stdout);
 }
 
 function validateInput(options) {
@@ -35,12 +33,15 @@ function WebpackShellPlugin(options) {
     options.onBuildEnd = defaultOptions.onBuildEnd;
   }
 
-  options = validateInput(options);
-
-
   if (!options.dev) {
     options.dev = defaultOptions.dev;
   }
+
+  if (!options.verbose) {
+    options.verbose = defaultOptions.verbose;
+  }
+
+  options = validateInput(options);
 
   this.options = options;
 
@@ -79,4 +80,3 @@ WebpackShellPlugin.prototype.apply = function (compiler) {
 };
 
 module.exports = WebpackShellPlugin;
-
