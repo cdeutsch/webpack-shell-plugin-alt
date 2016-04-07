@@ -47,10 +47,11 @@ module.exports = config;
 Once the build finishes, a child process is spawned firing both a python and node script.
 
 ### API
-* onBuildStart: **Array[ ]**, array of scripts to execute on the initial build. **Default: [ ]**
-* onBuildEnd: **Array[ ]**, array of scripts to execute after files are emitted. **Default: [ ]**
-* dev: **Boolean**, switch for development environments. This causes scripts to only execute once. Useful for running HMR on webpack-dev-server. **Default: false**
+* onBuildStart: array of scripts to execute on the initial build. **Default: [ ]**
+* onBuildEnd: array of scripts to execute after files are emitted at the end of the compilation. **Default: [ ]**
+* dev: switch for development environments. This causes scripts to only execute once. Useful for running HMR on webpack-dev-server. **Default: true**
+* verbose: enable for verbose output. **Default: false**
 
 ### Contributions
-[Yair Tavor]("http://stackoverflow.com/users/3054454/yair-tavor")
+Yair Tavor
 

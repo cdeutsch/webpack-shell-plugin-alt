@@ -9,19 +9,37 @@ function puts(error, stdout, stderr) {
   }
 }
 
+function validateInput(options) {
+  if (typeof options.onBuildStart === 'string') {
+    options.onBuildStart = options.onBuildStart.split('&&');
+  }
+  if (typeof options.onBuildEnd === 'string') {
+    options.onBuildEnd = options.onBuildEnd.split('&&');
+  }
+  return options;
+}
+
 function WebpackShellPlugin(options) {
   var defaultOptions = {
     onBuildStart: [],
     onBuildEnd: [],
-    dev: false,
+    dev: true,
     verbose: false
   };
+
   if (!options.onBuildStart) {
     options.onBuildStart = defaultOptions.onBuildStart;
   }
 
   if (!options.onBuildEnd) {
     options.onBuildEnd = defaultOptions.onBuildEnd;
+  }
+
+  options = validateInput(options);
+
+
+  if (!options.dev) {
+    options.dev = defaultOptions.dev;
   }
 
   this.options = options;
