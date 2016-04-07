@@ -51,8 +51,6 @@ Once the build finishes, a child process is spawned firing both a python and nod
 * onBuildEnd: **Array[ ]**, array of scripts to execute after files are emitted. **Default: [ ]**
 * dev: **Boolean**, switch for development environments. This causes scripts to only execute once. Useful for running HMR on webpack-dev-server. **Default: false**
 
-Enjoy
-
 ### Contributions
 [Yair Tavor]("http://stackoverflow.com/users/3054454/yair-tavor")
 
