@@ -1,6 +1,9 @@
+[![npm version](https://badge.fury.io/js/webpack-shell-plugin.svg)](https://badge.fury.io/js/webpack-shell-plugin)
+![](https://reposs.herokuapp.com/?path=1337programming/webpack-shell-plugin)
+[![npm](https://img.shields.io/npm/dm/webpack-shell-plugin.svg)]()
 # Webpack Shell Plugin
 
-This plugin allows you to run any shell commands before or after webpack builds. This will work for both webpack and webpack-dev-server. 
+This plugin allows you to run any shell commands before or after webpack builds. This will work for both webpack and webpack-dev-server.
 
 This goes great if you want to run any reporting tools or tests like selenium, protractor, phantom, ect.
 
@@ -14,7 +17,7 @@ Just install the plugin
 
 Insert into your webpack.config.js:
 
-````
+```js
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
 var plugins = [];
@@ -43,11 +46,15 @@ var config = {
 
 module.exports = config;
 
-````
+```
 Once the build finishes, a child process is spawned firing both a python and node script.
 
-Enjoy
+### API
+* `onBuildStart`: array of scripts to execute on the initial build. **Default: [ ]**
+* `onBuildEnd`: array of scripts to execute after files are emitted at the end of the compilation. **Default: [ ]**
+* `dev`: switch for development environments. This causes scripts to only execute once. Useful for running HMR on webpack-dev-server. **Default: true**
+* `verbose`: enable for verbose output. **Default: false**
 
 ### Contributions
-[Yair Tavor]("http://stackoverflow.com/users/3054454/yair-tavor")
+Yair Tavor
 
