@@ -52,9 +52,9 @@ Once the build finishes, a child process is spawned firing both a python and nod
 ### API
 * `onBuildStart`: array of scripts to execute on the initial build. **Default: [ ]**
 * `onBuildEnd`: array of scripts to execute after files are emitted at the end of the compilation. **Default: [ ]**
+* `onBuildExit`: array of scripts to execute after webpack's process is complete. **Default: [ ]**
 * `dev`: switch for development environments. This causes scripts to only execute once. Useful for running HMR on webpack-dev-server. **Default: true**
 * `verbose`: enable for verbose output. **Default: false**
 
 ### Contributions
 Yair Tavor
-
