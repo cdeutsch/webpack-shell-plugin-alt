@@ -9,11 +9,27 @@ This goes great if you want to run any reporting tools or tests like selenium, p
 
 ## Installation
 
-Just install the plugin
-
 `npm install --save-dev webpack-shell-plugin`
 
 ## Setup
+In `webpack.config.js`:
+
+```js
+const WebpackShellPlugin = require('webpack-shell-plugin');
+
+module.exports = {
+  ...
+  ...
+  plugins: [
+    new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']})
+  ],
+  ...
+}
+```
+
+
+
+## Example
 
 Insert into your webpack.config.js:
 
