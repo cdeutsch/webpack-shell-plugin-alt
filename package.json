@@ -13,13 +13,14 @@
   "keywords": [
     "webpack",
     "shell",
-    "webpack",
     "plugin",
-    "webpack",
     "shell",
-    "plugin",
-    "webpack",
-    "serve"
+    "serve",
+    "hmr",
+    "browser",
+    "script",
+    "opie",
+    "1337"
   ],
   "author": "Patrick Opie <opiepj@plu.edu>",
   "license": "MIT",
