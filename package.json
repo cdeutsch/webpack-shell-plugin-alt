@@ -1,6 +1,6 @@
 {
   "name": "webpack-shell-plugin",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Run shell commands before and after webpack builds",
   "main": "index.js",
   "scripts": {
