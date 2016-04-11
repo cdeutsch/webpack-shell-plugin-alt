@@ -5,7 +5,7 @@
 
 This plugin allows you to run any shell commands before or after webpack builds. This will work for both webpack and webpack-dev-server.
 
-Goes great with running reporting tools or tests such as selenium, protractor, phantom, ect.
+Goes great with running cron jobs, reporting tools, or tests such as selenium, protractor, phantom, ect.
 
 ## Installation
 
