@@ -41,11 +41,11 @@ function WebpackShellPlugin(options) {
     options.onExit = defaultOptions.onExit;
   }
 
-  if (!options.dev) {
+  if (!options.hasOwnProperty('dev')) {
     options.dev = defaultOptions.dev;
   }
 
-  if (!options.verbose) {
+  if (!options.hasOwnProperty('verbose')) {
     options.verbose = defaultOptions.verbose;
   }
 
