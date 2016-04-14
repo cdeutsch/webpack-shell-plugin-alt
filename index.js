@@ -31,7 +31,7 @@ function mergeOptions(options, defaults) {
 }
 
 function WebpackShellPlugin(options) {
-  var defaultOptions = {
+  var defaults = {
     onBuildStart: [],
     onBuildEnd: [],
     onExit: [],
