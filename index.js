@@ -1,4 +1,12 @@
-var exec = require('child_process').exec;
+const exec = require('child_process').exec;
+
+const defaultOptions = {
+  onBuildStart: [],
+  onBuildEnd: [],
+  onBuildExit: [],
+  dev: true,
+  verbose: false
+};
 
 function puts(error, stdout, stderr) {
   if (error) {
@@ -21,66 +29,56 @@ function validateInput(options) {
 }
 
 function mergeOptions(options, defaults) {
-  for (key in defaults) {
+  for (var key in defaults) {
     if (options.hasOwnProperty(key)) {
-      defaults[key] = options[key];    
+      defaults[key] = options[key];
     }
   }
-
   return defaults;
 }
 
-function WebpackShellPlugin(options) {
-  var defaults = {
-    onBuildStart: [],
-    onBuildEnd: [],
-    onBuildExit: [],
-    dev: true,
-    verbose: false
-  };
+export default class WebpackShellPlugin {
+  constructor(options) {
+    this.options = validateInput(mergeOptions(options, defaultOptions));
+  }
 
-  this.options = validateInput(mergeOptions(options, defaults));
+  apply(compiler) {
+
+    compiler.plugin('compilation', (compilation) => {
+      if (this.options.verbose) {
+        console.log(`Report compilation: ${compilation}`);
+      }
+      if (this.options.onBuildStart.length) {
+        console.log('Executing pre-build scripts');
+        this.options.onBuildStart.forEach(script => {
+          exec(script, puts);
+        });
+        if (this.options.dev) {
+          this.options.onBuildStart = [];
+        }
+      }
+    });
+
+    compiler.plugin('emit', (compilation, callback) => {
+      if (this.options.onBuildEnd.length) {
+        console.log('Executing post-build scripts');
+        this.options.onBuildEnd.forEach(script => {
+          exec(script, puts);
+        });
+        if (this.options.dev) {
+          this.options.onBuildEnd = [];
+        }
+      }
+      callback();
+    });
+
+    compiler.plugin('done', () => {
+      if (this.options.onBuildExit.length) {
+        console.log('Executing addiotn scripts befor exit');
+        this.options.onBuildExit.forEach(script => {
+          exec(script, puts);
+        });
+      }
+    });
+  }
 }
-
-WebpackShellPlugin.prototype.apply = function (compiler) {
-  var options = this.options;
-
-  compiler.plugin('compilation', function (compilation) {
-    if (options.verbose) {
-      console.log('Report compilation:', compilation);
-    }
-    if (options.onBuildStart.length) {
-      console.log('Executing pre-build scripts');
-      options.onBuildStart.forEach(function (script) {
-        exec(script, puts);
-      });
-      if (options.dev) {
-        options.onBuildStart = [];
-      }
-    }
-  });
-
-  compiler.plugin('emit', function (compilation, callback) {
-    if (options.onBuildEnd.length) {
-      console.log('Executing post-build scripts');
-      options.onBuildEnd.forEach(function (script) {
-        exec(script, puts);
-      });
-      if (options.dev) {
-        options.onBuildEnd = [];
-      }
-    }
-    callback();
-  });
-
-  compiler.plugin("done", function () {
-    if (options.onBuildExit.length) {
-      console.log("Executing addiotn scripts befor exit");
-      options.onBuildExit.forEach(function (script) {
-        exec(script, puts);
-      });
-    }
-  });
-};
-
-module.exports = WebpackShellPlugin;
