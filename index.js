@@ -14,8 +14,8 @@ function validateInput(options) {
   if (typeof options.onBuildEnd === 'string') {
     options.onBuildEnd = options.onBuildEnd.split('&&');
   }
-  if (typeof options.onExit === 'string') {
-    options.onExit = options.onExit.split('&&');
+  if (typeof options.onBuildExit === 'string') {
+    options.onBuildExit = options.onBuildExit.split('&&');
   }
   return options;
 }
@@ -24,7 +24,7 @@ function WebpackShellPlugin(options) {
   var defaultOptions = {
     onBuildStart: [],
     onBuildEnd: [],
-    onExit: [],
+    onBuildExit: [],
     dev: true,
     verbose: false
   };
@@ -37,8 +37,8 @@ function WebpackShellPlugin(options) {
     options.onBuildEnd = defaultOptions.onBuildEnd;
   }
 
-  if (!options.onExit) {
-    options.onExit = defaultOptions.onExit;
+  if (!options.onBuildExit) {
+    options.onBuildExit = defaultOptions.onBuildExit;
   }
 
   if (!options.dev) {
@@ -87,9 +87,9 @@ WebpackShellPlugin.prototype.apply = function (compiler) {
   });
 
   compiler.plugin("done", function () {
-    if (options.onExit.length) {
+    if (options.onBuildExit.length) {
       console.log("Executing addiotn scripts befor exit");
-      options.onExit.forEach(function (script) {
+      options.onBuildExit.forEach(function (script) {
         exec(script, puts);
       });
     }
