@@ -20,6 +20,16 @@ function validateInput(options) {
   return options;
 }
 
+function mergeOptions(options, defaults) {
+  for (key in defaults) {
+    if (options.hasOwnProperty(key)) {
+      defaults[key] = options[key];    
+    }
+  }
+
+  return defaults;
+}
+
 function WebpackShellPlugin(options) {
   var defaultOptions = {
     onBuildStart: [],
@@ -29,30 +39,7 @@ function WebpackShellPlugin(options) {
     verbose: false
   };
 
-  if (!options.onBuildStart) {
-    options.onBuildStart = defaultOptions.onBuildStart;
-  }
-
-  if (!options.onBuildEnd) {
-    options.onBuildEnd = defaultOptions.onBuildEnd;
-  }
-
-  if (!options.onExit) {
-    options.onExit = defaultOptions.onExit;
-  }
-
-  if (!options.hasOwnProperty('dev')) {
-    options.dev = defaultOptions.dev;
-  }
-
-  if (!options.hasOwnProperty('verbose')) {
-    options.verbose = defaultOptions.verbose;
-  }
-
-  options = validateInput(options);
-
-  this.options = options;
-
+  this.options = validateInput(mergeOptions(options, defaults));
 }
 
 WebpackShellPlugin.prototype.apply = function (compiler) {
