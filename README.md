@@ -72,5 +72,13 @@ Once the build finishes, a child process is spawned firing both a python and nod
 * `dev`: switch for development environments. This causes scripts to only execute once. Useful for running HMR on webpack-dev-server. **Default: true**
 * `verbose`: enable for verbose output. **Default: false**
 
+### Developing
+
+If opening a pull request, create an issue describing a fix or feature. Have your pull request point to the issue by writing your commits with the issue number in the message.
+
+Make sure you lint your code by running `npm run lint` and you can build the library by running `npm run build`.
+
+I appreciate any feed back as well, Thanks for helping!
+
 ### Contributions
 Yair Tavor
