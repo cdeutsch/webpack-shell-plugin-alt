@@ -49,7 +49,7 @@ export default class WebpackShellPlugin {
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
-        this.options.onBuildStart.forEach(script => {
+        this.options.onBuildStart.forEach((script) => {
           exec(script, puts);
         });
         if (this.options.dev) {
@@ -61,7 +61,7 @@ export default class WebpackShellPlugin {
     compiler.plugin('emit', (compilation, callback) => {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
-        this.options.onBuildEnd.forEach(script => {
+        this.options.onBuildEnd.forEach((script) => {
           exec(script, puts);
         });
         if (this.options.dev) {
@@ -73,8 +73,8 @@ export default class WebpackShellPlugin {
 
     compiler.plugin('done', () => {
       if (this.options.onBuildExit.length) {
-        console.log('Executing addiotn scripts befor exit');
-        this.options.onBuildExit.forEach(script => {
+        console.log('Executing additional scripts before exit');
+        this.options.onBuildExit.forEach((script) => {
           exec(script, puts);
         });
       }
