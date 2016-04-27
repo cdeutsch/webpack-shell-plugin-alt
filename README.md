@@ -80,5 +80,7 @@ Make sure you lint your code by running `npm run lint` and you can build the lib
 
 I appreciate any feed back as well, Thanks for helping!
 
+Also checkout our other webpack plugin [WebpackBrowserPlugin](https://github.com/1337programming/webpack-browser-plugin).
+
 ### Contributions
 Yair Tavor
