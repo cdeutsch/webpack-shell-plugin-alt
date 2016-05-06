@@ -25,7 +25,6 @@
     "manion",
     "1337"
   ],
-  "author": "Patrick Opie <opiepj@plu.edu>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/1337programming/webpack-shell-plugin/issues"
