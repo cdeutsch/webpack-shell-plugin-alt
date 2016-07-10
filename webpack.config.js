@@ -7,12 +7,12 @@ module.exports = {
   watch: true,
   entry: path.resolve(__dirname, 'test/entry.js'),
   output: {
-    path: path.resolve(__dirname, 'test'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
-  devServer: {
+  /*devServer: {
     contentBase: path.resolve(__dirname, 'test')
-  },
+  },*/
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style!css' }
