@@ -11,7 +11,11 @@ function puts(error, stdout, stderr) {
   if (error) {
     console.log('Error: ', error, stderr);
   }
-  console.log(stdout);
+}
+
+function spreadStdoutAndStdErr(proc) {
+  proc.stdout.pipe(process.stdout);
+  proc.stderr.pipe(process.stdout);
 }
 
 function validateInput(options) {
@@ -50,7 +54,7 @@ export default class WebpackShellPlugin {
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
         this.options.onBuildStart.forEach((script) => {
-          exec(script, puts);
+          spreadStdoutAndStdErr(exec(script, puts));
         });
         if (this.options.dev) {
           this.options.onBuildStart = [];
@@ -62,7 +66,7 @@ export default class WebpackShellPlugin {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
         this.options.onBuildEnd.forEach((script) => {
-          exec(script, puts);
+          spreadStdoutAndStdErr(exec(script, puts));
         });
         if (this.options.dev) {
           this.options.onBuildEnd = [];
@@ -75,7 +79,7 @@ export default class WebpackShellPlugin {
       if (this.options.onBuildExit.length) {
         console.log('Executing additional scripts before exit');
         this.options.onBuildExit.forEach((script) => {
-          exec(script, puts);
+          spreadStdoutAndStdErr(exec(script, puts));
         });
       }
     });
