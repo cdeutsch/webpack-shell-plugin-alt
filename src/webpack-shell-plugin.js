@@ -32,7 +32,7 @@ function validateInput(options) {
 }
 
 function mergeOptions(options, defaults) {
-  for (var key in defaults) {
+  for (let key in defaults) {
     if (options.hasOwnProperty(key)) {
       defaults[key] = options[key];
     }
