@@ -4,12 +4,19 @@ const defaultOptions = {
   onBuildEnd: [],
   onBuildExit: [],
   dev: true,
-  verbose: false
+  verbose: false,
+  throwOnExecError: false
 };
 
 function puts(error, stdout, stderr) {
   if (error) {
     console.log('Error: ', error, stderr);
+  }
+}
+
+function putsThrow(error, stdout, stderr) {
+  if (error) {
+    throw error;
   }
 }
 
@@ -32,7 +39,7 @@ function validateInput(options) {
 }
 
 function mergeOptions(options, defaults) {
-  for (let key in defaults) {
+  for (const key in defaults) {
     if (options.hasOwnProperty(key)) {
       defaults[key] = options[key];
     }
@@ -53,8 +60,14 @@ export default class WebpackShellPlugin {
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
-        this.options.onBuildStart.forEach((script) => {
-          spreadStdoutAndStdErr(exec(script, puts));
+        throw this.options.onBuildStart.forEach((script) => {
+          if (this.options.throwOnExecError) {
+            spreadStdoutAndStdErr(exec(script, putsThrow));
+          }
+          else
+          {
+            spreadStdoutAndStdErr(exec(script, puts));
+          }
         });
         if (this.options.dev) {
           this.options.onBuildStart = [];
@@ -66,7 +79,13 @@ export default class WebpackShellPlugin {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
         this.options.onBuildEnd.forEach((script) => {
-          spreadStdoutAndStdErr(exec(script, puts));
+          if (this.options.throwOnExecError) {
+            spreadStdoutAndStdErr(exec(script, putsThrow));
+          }
+          else
+          {
+            spreadStdoutAndStdErr(exec(script, puts));
+          }
         });
         if (this.options.dev) {
           this.options.onBuildEnd = [];
@@ -79,7 +98,13 @@ export default class WebpackShellPlugin {
       if (this.options.onBuildExit.length) {
         console.log('Executing additional scripts before exit');
         this.options.onBuildExit.forEach((script) => {
-          spreadStdoutAndStdErr(exec(script, puts));
+          if (this.options.throwOnExecError) {
+            spreadStdoutAndStdErr(exec(script, putsThrow));
+          }
+          else
+          {
+            spreadStdoutAndStdErr(exec(script, puts));
+          }
         });
       }
     });
