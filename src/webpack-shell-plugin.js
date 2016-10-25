@@ -60,7 +60,7 @@ export default class WebpackShellPlugin {
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
-        throw this.options.onBuildStart.forEach((script) => {
+        this.options.onBuildStart.forEach((script) => {
           if (this.options.throwOnExecError) {
             spreadStdoutAndStdErr(exec(script, putsThrow));
           }
