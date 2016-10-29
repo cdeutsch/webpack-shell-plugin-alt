@@ -1,4 +1,4 @@
-const exec = require('child_process').exec;
+const spawn = require('child_process').spawn;
 const defaultOptions = {
   onBuildStart: [],
   onBuildEnd: [],
@@ -13,9 +13,20 @@ function puts(error, stdout, stderr) {
   }
 }
 
-function spreadStdoutAndStdErr(proc) {
-  proc.stdout.pipe(process.stdout);
-  proc.stderr.pipe(process.stdout);
+function serializeScript(script) {
+  if (typeof script === 'string') {
+    const [command, ...args] = script.split(' ');
+    return {command, args};
+  }
+  const {command, args} = script;
+  return {command, args};
+}
+
+function handleScript(script) {
+  const {command, args} = serializeScript(script);
+  const proc = spawn(command, args, {stdio: 'inherit'});
+
+  proc.on('close', puts);
 }
 
 function validateInput(options) {
@@ -32,7 +43,7 @@ function validateInput(options) {
 }
 
 function mergeOptions(options, defaults) {
-  for (let key in defaults) {
+  for (const key in defaults) {
     if (options.hasOwnProperty(key)) {
       defaults[key] = options[key];
     }
@@ -53,9 +64,7 @@ export default class WebpackShellPlugin {
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
-        this.options.onBuildStart.forEach((script) => {
-          spreadStdoutAndStdErr(exec(script, puts));
-        });
+        this.options.onBuildStart.forEach(handleScript);
         if (this.options.dev) {
           this.options.onBuildStart = [];
         }
@@ -65,9 +74,7 @@ export default class WebpackShellPlugin {
     compiler.plugin('emit', (compilation, callback) => {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
-        this.options.onBuildEnd.forEach((script) => {
-          spreadStdoutAndStdErr(exec(script, puts));
-        });
+        this.options.onBuildEnd.forEach(handleScript);
         if (this.options.dev) {
           this.options.onBuildEnd = [];
         }
@@ -78,9 +85,7 @@ export default class WebpackShellPlugin {
     compiler.plugin('done', () => {
       if (this.options.onBuildExit.length) {
         console.log('Executing additional scripts before exit');
-        this.options.onBuildExit.forEach((script) => {
-          spreadStdoutAndStdErr(exec(script, puts));
-        });
+        this.options.onBuildExit.forEach(handleScript);
       }
     });
   }
