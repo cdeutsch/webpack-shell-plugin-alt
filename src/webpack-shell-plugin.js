@@ -64,8 +64,7 @@ export default class WebpackShellPlugin {
           if (this.options.throwOnExecError) {
             spreadStdoutAndStdErr(exec(script, putsThrow));
           }
-          else
-          {
+          else {
             spreadStdoutAndStdErr(exec(script, puts));
           }
         });
@@ -82,8 +81,7 @@ export default class WebpackShellPlugin {
           if (this.options.throwOnExecError) {
             spreadStdoutAndStdErr(exec(script, putsThrow));
           }
-          else
-          {
+          else {
             spreadStdoutAndStdErr(exec(script, puts));
           }
         });
@@ -101,8 +99,7 @@ export default class WebpackShellPlugin {
           if (this.options.throwOnExecError) {
             spreadStdoutAndStdErr(exec(script, putsThrow));
           }
-          else
-          {
+          else {
             spreadStdoutAndStdErr(exec(script, puts));
           }
         });
