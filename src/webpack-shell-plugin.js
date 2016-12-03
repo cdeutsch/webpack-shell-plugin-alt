@@ -4,8 +4,7 @@ const defaultOptions = {
   onBuildEnd: [],
   onBuildExit: [],
   dev: true,
-  verbose: false,
-  throwOnExecError: false
+  verbose: false
 };
 
 function puts(error, stdout, stderr) {
