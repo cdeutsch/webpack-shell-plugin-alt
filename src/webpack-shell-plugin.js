@@ -9,7 +9,7 @@ const defaultOptions = {
 
 function puts(error, stdout, stderr) {
   if (error) {
-    console.log('Error: ', error, stderr);
+    throw error;
   }
 }
 
@@ -25,7 +25,6 @@ function serializeScript(script) {
 function handleScript(script) {
   const {command, args} = serializeScript(script);
   const proc = spawn(command, args, {stdio: 'inherit'});
-
   proc.on('close', puts);
 }
 
