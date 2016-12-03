@@ -1,11 +1,10 @@
-const exec = require('child_process').exec;
+const spawn = require('child_process').spawn;
 const defaultOptions = {
   onBuildStart: [],
   onBuildEnd: [],
   onBuildExit: [],
   dev: true,
-  verbose: false,
-  throwOnExecError: false
+  verbose: false
 };
 
 function puts(error, stdout, stderr) {
@@ -14,15 +13,20 @@ function puts(error, stdout, stderr) {
   }
 }
 
-function putsThrow(error, stdout, stderr) {
-  if (error) {
-    throw error;
+function serializeScript(script) {
+  if (typeof script === 'string') {
+    const [command, ...args] = script.split(' ');
+    return {command, args};
   }
+  const {command, args} = script;
+  return {command, args};
 }
 
-function spreadStdoutAndStdErr(proc) {
-  proc.stdout.pipe(process.stdout);
-  proc.stderr.pipe(process.stdout);
+function handleScript(script) {
+  const {command, args} = serializeScript(script);
+  const proc = spawn(command, args, {stdio: 'inherit'});
+
+  proc.on('close', puts);
 }
 
 function validateInput(options) {
@@ -60,14 +64,7 @@ export default class WebpackShellPlugin {
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
-        this.options.onBuildStart.forEach((script) => {
-          if (this.options.throwOnExecError) {
-            spreadStdoutAndStdErr(exec(script, putsThrow));
-          }
-          else {
-            spreadStdoutAndStdErr(exec(script, puts));
-          }
-        });
+        this.options.onBuildStart.forEach(handleScript);
         if (this.options.dev) {
           this.options.onBuildStart = [];
         }
@@ -77,14 +74,7 @@ export default class WebpackShellPlugin {
     compiler.plugin('emit', (compilation, callback) => {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
-        this.options.onBuildEnd.forEach((script) => {
-          if (this.options.throwOnExecError) {
-            spreadStdoutAndStdErr(exec(script, putsThrow));
-          }
-          else {
-            spreadStdoutAndStdErr(exec(script, puts));
-          }
-        });
+        this.options.onBuildEnd.forEach(handleScript);
         if (this.options.dev) {
           this.options.onBuildEnd = [];
         }
@@ -95,14 +85,7 @@ export default class WebpackShellPlugin {
     compiler.plugin('done', () => {
       if (this.options.onBuildExit.length) {
         console.log('Executing additional scripts before exit');
-        this.options.onBuildExit.forEach((script) => {
-          if (this.options.throwOnExecError) {
-            spreadStdoutAndStdErr(exec(script, putsThrow));
-          }
-          else {
-            spreadStdoutAndStdErr(exec(script, puts));
-          }
-        });
+        this.options.onBuildExit.forEach(handleScript);
       }
     });
   }
