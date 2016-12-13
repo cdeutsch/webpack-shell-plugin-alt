@@ -7,9 +7,9 @@ const defaultOptions = {
   onBuildEnd: [],
   onBuildExit: [],
   dev: true,
-  verbose: false
+  verbose: false,
+  safe: false
 };
-
 
 export default class WebpackShellPlugin {
   constructor(options) {
@@ -37,7 +37,7 @@ export default class WebpackShellPlugin {
   }
 
   handleScript(script) {
-    if (os.platform() === 'win32') {
+    if (os.platform() === 'win32' || this.options.safe) {
       this.spreadStdoutAndStdErr(exec(script, this.puts));
     } else {
       const {command, args} = this.serializeScript(script);
@@ -73,6 +73,7 @@ export default class WebpackShellPlugin {
     compiler.plugin('compilation', (compilation) => {
       if (this.options.verbose) {
         console.log(`Report compilation: ${compilation}`);
+        console.warn(`WebpackShellPlugin [${new Date()}]: Verbose is being deprecated, please remove.`);
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
