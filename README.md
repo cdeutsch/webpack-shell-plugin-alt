@@ -7,6 +7,10 @@ This plugin allows you to run any shell commands before or after webpack builds.
 
 Goes great with running cron jobs, reporting tools, or tests such as selenium, protractor, phantom, ect.
 
+## WARNING
+
+This plugin is meant for running simple command line executions. It is not meant to be a task management tool.
+
 ## Installation
 
 `npm install --save-dev webpack-shell-plugin`
