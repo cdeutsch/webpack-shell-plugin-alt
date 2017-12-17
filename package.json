@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "Run shell commands before and after webpack builds",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "webpack",
     "test:dev": "webpack-dev-server --progress",
