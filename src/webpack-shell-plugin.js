@@ -70,7 +70,7 @@ export default class WebpackShellPlugin {
 
   apply(compiler) {
 
-    compiler.plugin('compilation', (compilation) => {
+    compiler.hooks.compilation.tap('WebpackShellPlugin', (compilation) => {
       if (this.options.verbose) {
         console.log(`Report compilation: ${compilation}`);
         console.warn(`WebpackShellPlugin [${new Date()}]: Verbose is being deprecated, please remove.`);
@@ -86,7 +86,7 @@ export default class WebpackShellPlugin {
       }
     });
 
-    compiler.plugin('after-emit', (compilation, callback) => {
+    compiler.hooks.afterEmit.tapAsync('WebpackShellPlugin', (compilation, callback) => {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
         for (let i = 0; i < this.options.onBuildEnd.length; i++) {
@@ -99,7 +99,7 @@ export default class WebpackShellPlugin {
       callback();
     });
 
-    compiler.plugin('done', () => {
+    compiler.hooks.done.tap('WebpackShellPlugin', () => {
       if (this.options.onBuildExit.length) {
         console.log('Executing additional scripts before exit');
         for (let i = 0; i < this.options.onBuildExit.length; i++) {
