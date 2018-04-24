@@ -35,12 +35,14 @@
   "homepage": "https://github.com/1337programming/webpack-shell-plugin",
   "devDependencies": {
     "babel-core": "^6.7.6",
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "css-loader": "^0.23.1",
-    "eslint": "^2.7.0",
-    "rollup": "^0.25.8",
-    "rollup-plugin-babel": "^2.4.0",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.13.1"
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.6.0"
   }
 }
