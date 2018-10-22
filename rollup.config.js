@@ -1,10 +1,16 @@
 import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
 
 export default {
-  entry: 'src/webpack-shell-plugin.js',
-  format: 'cjs',
+  input: 'src/webpack-shell-plugin.js',
+  output: {
+    file: 'lib/index.js',
+    format: 'cjs'
+  },
   plugins: [
-    babel()
-  ],
-  dest: 'lib/index.js'
+    resolve(),
+    babel({
+      exclude: 'node_modules/**' // only transpile our source code
+    })
+  ]
 };

@@ -16,7 +16,7 @@ export default class WebpackShellPlugin {
     this.options = this.validateInput(this.mergeOptions(options, defaultOptions));
   }
 
-  puts(error, stdout, stderr) {
+  puts(error) {
     if (error) {
       throw error;
     }
@@ -70,15 +70,15 @@ export default class WebpackShellPlugin {
 
   apply(compiler) {
 
-    compiler.plugin('compilation', (compilation) => {
+    compiler.hooks.compilation.tap('WebpackShellPlugin', (compilation) => {
       if (this.options.verbose) {
         console.log(`Report compilation: ${compilation}`);
         console.warn(`WebpackShellPlugin [${new Date()}]: Verbose is being deprecated, please remove.`);
       }
       if (this.options.onBuildStart.length) {
         console.log('Executing pre-build scripts');
-        for (let i = 0; i < this.options.onBuildStart.length; i++) {
-          this.handleScript(this.options.onBuildStart[i]);
+        for (let ii = 0; ii < this.options.onBuildStart.length; ii += 1) {
+          this.handleScript(this.options.onBuildStart[ii]);
         }
         if (this.options.dev) {
           this.options.onBuildStart = [];
@@ -86,11 +86,11 @@ export default class WebpackShellPlugin {
       }
     });
 
-    compiler.plugin('after-emit', (compilation, callback) => {
+    compiler.hooks.afterEmit.tapAsync('WebpackShellPlugin', (compilation, callback) => {
       if (this.options.onBuildEnd.length) {
         console.log('Executing post-build scripts');
-        for (let i = 0; i < this.options.onBuildEnd.length; i++) {
-          this.handleScript(this.options.onBuildEnd[i]);
+        for (let ii = 0; ii < this.options.onBuildEnd.length; ii += 1) {
+          this.handleScript(this.options.onBuildEnd[ii]);
         }
         if (this.options.dev) {
           this.options.onBuildEnd = [];
@@ -99,11 +99,11 @@ export default class WebpackShellPlugin {
       callback();
     });
 
-    compiler.plugin('done', () => {
+    compiler.hooks.done.tap('WebpackShellPlugin', () => {
       if (this.options.onBuildExit.length) {
         console.log('Executing additional scripts before exit');
-        for (let i = 0; i < this.options.onBuildExit.length; i++) {
-          this.handleScript(this.options.onBuildExit[i]);
+        for (let ii = 0; ii < this.options.onBuildExit.length; ii += 1) {
+          this.handleScript(this.options.onBuildExit[ii]);
         }
       }
     });
