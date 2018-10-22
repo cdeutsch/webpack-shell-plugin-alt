@@ -1,7 +1,4 @@
-[![npm version](https://badge.fury.io/js/webpack-shell-plugin.svg)](https://badge.fury.io/js/webpack-shell-plugin)
-![](https://reposs.herokuapp.com/?path=1337programming/webpack-shell-plugin)
-[![npm](https://img.shields.io/npm/dm/webpack-shell-plugin.svg)]()
-# Webpack Shell Plugin
+# Webpack Shell Plugin Alt
 
 This plugin allows you to run any shell commands before or after webpack builds. This will work for both webpack and webpack-dev-server.
 
@@ -13,13 +10,13 @@ This plugin is meant for running simple command line executions. It is not meant
 
 ## Installation
 
-`npm install --save-dev webpack-shell-plugin`
+`npm install --save-dev webpack-shell-plugin-alt`
 
 ## Setup
 In `webpack.config.js`:
 
 ```js
-const WebpackShellPlugin = require('webpack-shell-plugin');
+import WebpackShellPlugin from 'webpack-shell-plugin-alt';
 
 module.exports = {
   ...
@@ -36,7 +33,7 @@ module.exports = {
 Insert into your webpack.config.js:
 
 ```js
-const WebpackShellPlugin = require('webpack-shell-plugin');
+import WebpackShellPlugin from 'webpack-shell-plugin-alt';
 const path = require('path');
 
 var plugins = [];
