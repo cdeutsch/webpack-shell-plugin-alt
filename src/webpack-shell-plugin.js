@@ -6,6 +6,7 @@ const defaultOptions = {
   onBuildStart: [],
   onBuildEnd: [],
   onBuildExit: [],
+  onCompile: [],
   dev: true,
   verbose: false,
   safe: false
@@ -56,6 +57,9 @@ export default class WebpackShellPlugin {
     if (typeof options.onBuildExit === 'string') {
       options.onBuildExit = options.onBuildExit.split('&&');
     }
+    if (typeof options.onCompile === 'string') {
+      options.onCompile = options.onCompile.split('&&');
+    }
     return options;
   }
 
@@ -82,6 +86,13 @@ export default class WebpackShellPlugin {
         }
         if (this.options.dev) {
           this.options.onBuildStart = [];
+        }
+      }
+
+      if (this.options.onCompile.length) {
+        console.log('Executing compile scripts');
+        for (let ii = 0; ii < this.options.onCompile.length; ii += 1) {
+          this.handleScript(this.options.onCompile[ii]);
         }
       }
     });

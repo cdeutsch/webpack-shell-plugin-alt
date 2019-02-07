@@ -20,6 +20,9 @@ declare namespace WebpackShellPlugin {
     /** Scripts to execute after Webpack's process completes. Defaults to []. */
     onBuildExit?: string[];
 
+    /** Scripts to execute on every Webpack compile. Defaults to []. */
+    onCompile?: string[];
+
     /**
      * Switch for development environments. This causes scripts to execute once.
      * Useful for running HMR on webpack-dev-server or webpack watch mode.
