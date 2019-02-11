@@ -88,13 +88,16 @@ export default class WebpackShellPlugin {
           this.options.onBuildStart = [];
         }
       }
+    });
 
+    compiler.hooks.watchRun.tap('WebpackShellPlugin', (compilation, callback) => {
       if (this.options.onCompile.length) {
         console.log('Executing compile scripts');
         for (let ii = 0; ii < this.options.onCompile.length; ii += 1) {
           this.handleScript(this.options.onCompile[ii]);
         }
       }
+      callback();
     });
 
     compiler.hooks.afterEmit.tapAsync('WebpackShellPlugin', (compilation, callback) => {
