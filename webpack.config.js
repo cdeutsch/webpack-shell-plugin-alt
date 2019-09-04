@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const WebpackShellPlugin = require('./lib');
 
 module.exports = {
+  mode: 'development',
   watch: true,
   entry: path.resolve(__dirname, 'test/entry.js'),
   output: {
@@ -14,8 +15,18 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'test')
   },*/
   module: {
-    loaders: [
-      { test: /\.css$/, loader: 'style!css' }
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+        ]
+      }
     ]
   },
   plugins: [
