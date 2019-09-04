@@ -65,6 +65,7 @@ export default class WebpackShellPlugin {
 
   mergeOptions(options, defaults) {
     for (const key in defaults) {
+      // eslint-disable-next-line no-prototype-builtins
       if (options.hasOwnProperty(key)) {
         defaults[key] = options[key];
       }
